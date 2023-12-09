@@ -33,8 +33,6 @@ public class ArticuloService {
         return rutaArchivo;
     }
 
-
-
     public Articulo crearArticulo(Articulo articulo){
         return articuloRepository.save(articulo);
     }
@@ -78,6 +76,31 @@ public class ArticuloService {
             }
             articuloRepository.save(articuloEncontrado);
             return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean actualizarImagenArticulo(MultipartFile imagen, Long id) throws IOException {
+        Articulo articuloEncontrado = buscarArticulo(id);
+        if (articuloEncontrado != null && !imagen.isEmpty()){
+            eliminarImagen(articuloEncontrado.getRutaImagen());
+            articuloEncontrado.setRutaImagen(guardarImagen(imagen));
+            crearArticulo(articuloEncontrado);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean eliminarImagen(String rutaImagen){
+        File imagen = new File(rutaImagen);
+        if (imagen.exists()){
+            if (imagen.delete()){
+                return true;
+            }else{
+                return false;
+            }
         }else {
             return false;
         }

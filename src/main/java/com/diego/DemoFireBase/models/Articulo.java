@@ -2,6 +2,7 @@ package com.diego.DemoFireBase.models;
 
 import com.google.firebase.database.annotations.NotNull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name= "Articulo")
@@ -11,6 +12,7 @@ public class Articulo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
+    @Size (max = 400)
     private String descripcion;
     private String autor;
     // A poder ser las imagenes a ingresar deben de ser en JPEG, sino PNG.
