@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticuloService {
@@ -22,7 +23,7 @@ public class ArticuloService {
 
     public String guardarImagen(MultipartFile file) throws IOException {
         String nombreArchivo = file.getOriginalFilename();
-        String rutaArchivo = uploadDir+ File.separator + nombreArchivo;
+        String rutaArchivo = uploadDir+ nombreArchivo;
 
         File imagen = new File(rutaArchivo);
         imagen.createNewFile();
@@ -31,6 +32,8 @@ public class ArticuloService {
         }
         return rutaArchivo;
     }
+
+
 
     public Articulo crearArticulo(Articulo articulo){
         return articuloRepository.save(articulo);
