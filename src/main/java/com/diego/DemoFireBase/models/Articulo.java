@@ -10,23 +10,22 @@ public class Articulo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotNull
     private String titulo;
-
-    @NotNull
     private String descripcion;
-
-    @NotNull
     private String autor;
-
-    @NotNull
+    // A poder ser las imagenes a ingresar deben de ser en JPEG, sino PNG.
     private String rutaImagen;
-
-    @NotNull
     private String url;
 
     public Articulo(){
+    }
+
+    public Articulo(String titulo, String descripcion, String autor, String rutaImagen, String url) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.autor = autor;
+        this.rutaImagen = rutaImagen;
+        this.url = url;
     }
 
     public Long getId() {
