@@ -49,7 +49,9 @@ public class ArticuloService {
         if (buscarArticulo(id)== null){
             return false;
         }else{
+            String ruta = buscarArticulo(id).getRutaImagen();
             articuloRepository.delete(buscarArticulo(id));
+            eliminarImagen(ruta);
             return true;
         }
     }
