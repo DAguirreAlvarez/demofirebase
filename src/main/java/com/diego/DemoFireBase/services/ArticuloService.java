@@ -56,8 +56,6 @@ public class ArticuloService {
         }
     }
 
-
-
     public boolean actualizarArticulo(Articulo articulo, Long id){
         Articulo articuloEncontrado = buscarArticulo(id);
         if (articuloEncontrado != null){

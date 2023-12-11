@@ -23,10 +23,10 @@ public class ImagenController {
     @Autowired
     private ArticuloService articuloService;
 
-    @GetMapping("/{rutaImagen}")
-    public ResponseEntity<Resource> retornarImagen(@PathVariable("rutaImagen")String rutaImagen){
-        Resource imagen = new FileSystemResource(uploadDir+ rutaImagen);
-        String extension = "image/"+FilenameUtils.getExtension(rutaImagen);
+    @GetMapping("/ruta/{nombreArchivo}")
+    public ResponseEntity<Resource> retornarImagen(@PathVariable("nombreArchivo")String nombreArchivo){
+        Resource imagen = new FileSystemResource(uploadDir+ nombreArchivo);
+        String extension = "image/"+FilenameUtils.getExtension(nombreArchivo);
         // System.out.println(imagen);
         // System.out.println(extension);
         if (imagen.exists() && imagen.isReadable()){
@@ -35,8 +35,21 @@ public class ImagenController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/id/{idArticulo}")
+    public ResponseEntity<Resource> retornarImagenPorIdArticulo(@PathVariable("idArticulo")Long idArticulo){
+        String rutaImagen = articuloService.buscarArticulo(idArticulo).getRutaImagen();
+        Resource imagen = new FileSystemResource(rutaImagen);
+        String extension = "image/"+FilenameUtils.getExtension(rutaImagen);
+        if (imagen.exists() && imagen.isReadable()){
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType(extension)).body(imagen);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
     @PutMapping("/{id}")
-    public boolean actualizarImagenArticulo(@PathVariable("id") Long id, @RequestParam("imagen")MultipartFile imagen) throws IOException {
+    public boolean actualizarImagenArticulo(@PathVariable("id") Long id,
+                                            @RequestParam("imagen")MultipartFile imagen) throws IOException {
         return articuloService.actualizarImagenArticulo(imagen, id);
     }
 
